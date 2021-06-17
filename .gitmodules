@@ -1,0 +1,3 @@
+[submodule "discord-mc-protobuf"]
+	path = discord-mc-protobuf
+	url = https://github.com/prototypicalpro/discord-mc-protobuf
