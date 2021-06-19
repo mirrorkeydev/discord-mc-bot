@@ -43,6 +43,10 @@ var commands = []*discordgo.ApplicationCommand{
 		Description: "Pings the discord bot. ",
 	},
 	{
+		Name:        "version",
+		Description: "Returns the bot's version. ",
+	},
+	{
 		Name:        "server",
 		Description: "Control the Minecraft Server",
 		Options: []*discordgo.ApplicationCommandOption{
@@ -73,8 +77,9 @@ var commands = []*discordgo.ApplicationCommand{
 }
 
 var commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
-	"ping":      handlers.Ping,
-	"server":    handlers.Server,
+	"ping": handlers.Ping,
+	"version": handlers.Version,
+	"server": handlers.Server,
 	"whitelist": handlers.Whitelist,
 }
 
@@ -125,6 +130,9 @@ func main() {
 	}
 
 	setUpCommands()
+
+	// To initialize status
+	handlers.McServerIsUp(discordSession);
 
 	defer discordSession.Close()
 

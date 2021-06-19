@@ -21,6 +21,15 @@ func Ping(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	})
 }
 
+func Version(s *discordgo.Session, i *discordgo.InteractionCreate) {
+	s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+		Type: discordgo.InteractionResponseChannelMessageWithSource,
+		Data: &discordgo.InteractionApplicationCommandResponseData{
+			Content: "v1.1 :v:",
+		},
+	})
+}
+
 func Server(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	content := ""
 	switch i.Data.Options[0].Name {
@@ -83,7 +92,7 @@ func Whitelist(s *discordgo.Session, i *discordgo.InteractionCreate) {
 
 	var res = ""
 
-	serverIsUp, err := mcServerIsUp(s)
+	serverIsUp, err := McServerIsUp(s)
 	if err != nil {
 		res = "unable to check if MC server is up"
 	} else if !serverIsUp {
@@ -103,7 +112,7 @@ func Whitelist(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	}
 }
 
-func mcServerIsUp(s *discordgo.Session) (bool, error) {
+func McServerIsUp(s *discordgo.Session) (bool, error) {
 	serverIsUp, err := server.IsUp()
 	if err != nil {
 		return false, err
