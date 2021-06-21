@@ -25,7 +25,7 @@ func Version(s *discordgo.Session, i *discordgo.InteractionCreate) {
 	s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 		Type: discordgo.InteractionResponseChannelMessageWithSource,
 		Data: &discordgo.InteractionApplicationCommandResponseData{
-			Content: "v1.1 :v:",
+			Content: "v1.1.1 :v:",
 		},
 	})
 }
@@ -131,4 +131,18 @@ func McServerIsUp(s *discordgo.Session) (bool, error) {
 		}
 		return false, nil
 	}
+}
+
+func Shame(s *discordgo.Session, i *discordgo.InteractionCreate) {
+	userToShame := i.Data.Options[0].UserValue(s)
+	shameMessage := i.Data.Options[1].StringValue()
+
+	content := fmt.Sprintf("%v, you have been shamed: %v", userToShame.Mention(), shameMessage)
+
+	s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+		Type: discordgo.InteractionResponseChannelMessageWithSource,
+		Data: &discordgo.InteractionApplicationCommandResponseData{
+			Content: content,
+		},
+	})
 }

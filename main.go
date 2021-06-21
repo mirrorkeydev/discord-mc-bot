@@ -40,11 +40,11 @@ func init() {
 var commands = []*discordgo.ApplicationCommand{
 	{
 		Name:        "ping",
-		Description: "Pings the discord bot. ",
+		Description: "Ping the discord bot. ",
 	},
 	{
 		Name:        "version",
-		Description: "Returns the bot's version. ",
+		Description: "Return the bot's version. ",
 	},
 	{
 		Name:        "server",
@@ -74,6 +74,24 @@ var commands = []*discordgo.ApplicationCommand{
 			},
 		},
 	},
+	{
+		Name:        "shame",
+		Description: "Shame a user",
+		Options: []*discordgo.ApplicationCommandOption{
+			{
+				Type:        discordgo.ApplicationCommandOptionUser,
+				Name:        "user",
+				Description: "The user to shame",
+				Required:    true,
+			},
+			{
+				Type:        discordgo.ApplicationCommandOptionString,
+				Name:        "message",
+				Description: "The message you want to relay to the user",
+				Required:    true,
+			},
+		},
+	},
 }
 
 var commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate){
@@ -81,6 +99,7 @@ var commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.Interac
 	"version": handlers.Version,
 	"server": handlers.Server,
 	"whitelist": handlers.Whitelist,
+	"shame": handlers.Shame,
 }
 
 func setUpCommands() {
